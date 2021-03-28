@@ -1,0 +1,73 @@
+version: "3"
+services:
+  postgres_db:
+    container_name: postgres_db
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=image_db
+    volumes:
+      - postgres_db_volume:/var/lib/postgresql
+    networks:
+      - api_network
+  #Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: images_api_nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./frontend/build/:/var/www/html/public/
+      - images_folder:/var/www/html/images_folder/
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./nginx/ssl/:/etc/nginx/ssl/
+    depends_on:
+      - fastapi
+    networks:
+      - api_network
+      - nginx_network
+  fastapi:
+    container_name: images_api_fastapi
+    image: fast_api_backend
+    user: fastapi_user
+    volumes:
+      - ./backend:/code
+      - images_folder:/images_folder/
+    ports:
+      - "8012:8012"
+    depends_on:
+      - migration
+    networks:
+      - api_network
+    command: uvicorn main:app --host 0.0.0.0 --port 8012 --proxy-headers
+  migration:
+    container_name: images_api_upgrade_db
+    image: fast_api_backend
+    user: fastapi_user
+    build:
+      context: ./backend
+      dockerfile: Python.Dockerfile
+    environment:
+      - PYTHONPATH=.
+    command: wait-for-it.sh postgres_db:5432 -- alembic upgrade head
+    volumes:
+      - ./backend:/code
+    networks:
+      - api_network
+    depends_on:
+      - postgres_db
+volumes:
+  images_folder: { }
+  postgres_db_volume: { }
+networks:
+  api_network:
+    driver: bridge
+    internal: true
+  nginx_network:
+    driver: bridge

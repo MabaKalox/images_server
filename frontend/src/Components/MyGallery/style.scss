@@ -1,0 +1,17 @@
+.MyGallery {
+  text-align: center;
+}
+
+.update_list_btn_icon {
+  animation: spin 3s linear infinite;
+  animation-play-state: paused;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
