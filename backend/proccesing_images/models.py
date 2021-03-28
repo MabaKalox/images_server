@@ -1,17 +1,10 @@
-from pydantic import BaseModel
-from typing import List, Optional
+from database.database import Base
+from sqlalchemy import Column, Integer, String, DateTime
 import datetime
 
 
-class UploadImageModel(BaseModel):
-    was_renamed: bool = False
-    was_recreated: bool = False
-    image_path: Optional[str]
-
-
-class RemoveImageModel(BaseModel):
-    image_path: Optional[str]
-
-
-class ImageListModel(BaseModel):
-    images_path_list: List[str]
+class ImageModel(Base):
+    __tablename__ = "images"
+    image_id = Column(Integer, primary_key=True)
+    image_path = Column(String, index=True, unique=True)
+    image_timestamp = Column(DateTime, default=datetime.datetime.utcnow())

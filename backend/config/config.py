@@ -16,5 +16,4 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings():
     s = Settings()
-    print(s.database_url)
     return s

@@ -6,8 +6,6 @@ import uvicorn
 
 app = FastAPI()
 
-# app.mount("/public", StaticFiles(directory="public"), name="static")
-
 
 app.include_router(images_router, prefix="/images")
 

@@ -3,9 +3,11 @@ import "./style.scss"
 import {Container, Row, Col, Button} from "react-bootstrap";
 import MyGalleryCard from "./MyGalleryCard";
 import axios from "axios";
+import {ImageInfo} from './types'
+
 
 const MyGallery = () => {
-    const [images_path_list, set_images_path_list] = useState<string[]>([]);
+    const [images_list, set_images_list] = useState<ImageInfo[]>([]);
     const update_list_btn_icon = useRef<SVGSVGElement>(null);
 
     const handle_update_list = () => {
@@ -14,7 +16,7 @@ const MyGallery = () => {
         }
         axios.get("/images/get_images_list")
             .then((response) => {
-                set_images_path_list(response.data['images_path_list'])
+                set_images_list(response.data)
             })
             .catch((error) => {
 
@@ -54,7 +56,10 @@ const MyGallery = () => {
                     <div className="bg-light">
                         <Container className="py-3">
                             <Row>
-                                {images_path_list.map((image_url) => <MyGalleryCard image_url={image_url}/>)}
+                                {images_list.map((image_info) => <MyGalleryCard
+                                    {...image_info}
+                                    handle_update_list={handle_update_list}
+                                />)}
                             </Row>
                         </Container>
                     </div>
