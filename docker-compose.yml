@@ -59,8 +59,8 @@ services:
     environment:
       - PYTHONPATH=.
     command: wait-for-it.sh postgresql:5432 -- alembic upgrade head
-    volumes:
-      - ./backend:/code
+#    volumes:
+#      - ./backend:/code
     networks:
       - api_network
     depends_on:
