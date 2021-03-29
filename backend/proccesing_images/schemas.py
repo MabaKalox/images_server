@@ -6,10 +6,10 @@ from pathlib import Path
 
 class BaseImageSchema(BaseModel):
     image_path: Path
-    image_timestamp: Optional[datetime.datetime]
 
 
 class DBImageSchema(BaseImageSchema):
+    image_timestamp: datetime.datetime
     image_id: int
 
     class Config:

@@ -6,7 +6,6 @@ from aiofiles import os
 from fastapi import UploadFile
 from .schemas import UploadImageSchema
 from .models import ImageModel
-import datetime
 from pathlib import Path
 
 
@@ -33,12 +32,10 @@ class ImageService:
             db_new_image = ImageModel(
                 image_path=image_info.image_path.as_posix()
             )
-            image_info.image_timestamp = datetime.datetime.utcnow()
             db.add(db_new_image)
         else:
-            db_image_info.image_timestamp = datetime.datetime.now()
+            db_image_info.update_timestamp()
             image_info.was_recreated = True
-            image_info.image_timestamp = db_image_info.image_timestamp
         db.commit()
 
     @staticmethod

@@ -1,10 +1,9 @@
-.MyGallery {
-  text-align: center;
-}
-
-.update_list_btn_icon {
+.loading {
   animation: spin 3s linear infinite;
-  animation-play-state: paused;
+  animation-play-state: running;
+  &--paused {
+    animation-play-state: paused;
+  }
 }
 
 @keyframes spin {

@@ -1,7 +1,7 @@
 version: "3"
 services:
-  postgres_db:
-    container_name: postgres_db
+  postgresql:
+    container_name: images_api_postgresql
     image: postgres:latest
     ports:
       - "5432:5432"
@@ -13,20 +13,23 @@ services:
       - postgres_db_volume:/var/lib/postgresql
     networks:
       - api_network
+#      - nginx_network
   #Nginx Service
-  nginx:
-    image: nginx:alpine
-    container_name: images_api_nginx
+  nginx_react:
+    build:
+      context: .
+      dockerfile: ./frontend/React.Dockerfile
+    container_name: images_api_nginx_react
     restart: unless-stopped
     tty: true
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./frontend/build/:/var/www/html/public/
+#      - ./frontend/build/:/var/www/html/public/
       - images_folder:/var/www/html/images_folder/
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
-      - ./nginx/ssl/:/etc/nginx/ssl/
+#      - ./nginx/conf.d/:/etc/nginx/conf.d/
+#      - ./nginx/ssl/:/etc/nginx/ssl/
     depends_on:
       - fastapi
     networks:
@@ -37,7 +40,7 @@ services:
     image: fast_api_backend
     user: fastapi_user
     volumes:
-      - ./backend:/code
+#      - ./backend:/code
       - images_folder:/images_folder/
     ports:
       - "8012:8012"
@@ -51,17 +54,17 @@ services:
     image: fast_api_backend
     user: fastapi_user
     build:
-      context: ./backend
-      dockerfile: Python.Dockerfile
+      context: .
+      dockerfile: ./backend/Python.Dockerfile
     environment:
       - PYTHONPATH=.
-    command: wait-for-it.sh postgres_db:5432 -- alembic upgrade head
+    command: wait-for-it.sh postgresql:5432 -- alembic upgrade head
     volumes:
       - ./backend:/code
     networks:
       - api_network
     depends_on:
-      - postgres_db
+      - postgresql
 volumes:
   images_folder: { }
   postgres_db_volume: { }

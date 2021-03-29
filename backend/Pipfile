@@ -12,10 +12,9 @@ pydantic = "*"
 alembic = "*"
 sqlalchemy = "*"
 python-dotenv = "*"
-psycopg2 = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
-flake8 = "*"
 
 [requires]
 python_version = "3.8"
