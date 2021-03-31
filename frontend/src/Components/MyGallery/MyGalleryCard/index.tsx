@@ -15,10 +15,17 @@ const MyGalleryCard = (props: MyGalleryCardProps) => {
                 params: {
                     image_id: props.image_id
                 }
-            }).then((response) => {
+            }).then(() => {
                 props.handle_update_list()
             }).catch((error) => {
-
+                console.log(error)
+                if (error.response) {
+                    alert([
+                        `Enable to Delete file: ${props.image_path}`,
+                        `message: ${error.response.data.detail}`,
+                        `code: ${error.response.status}`
+                    ].join('\n'))
+                }
             })
         }
     }
@@ -30,38 +37,40 @@ const MyGalleryCard = (props: MyGalleryCardProps) => {
         return utc_datetime_obj.toLocaleString()
     }
 
-    return (<Col xs={12} md={6} lg={4} className="">
-        <div className="MyGalleryCard mb-4 box-shadow bg-white">
-            <Image rounded className="MyGalleryCard-image" src={props.image_path} fluid/>
-            <div className="p-2 d-flex justify-content-between align-items-center">
-                <ButtonGroup>
-                    <Button
-                        variant="outline-primary"
-                        className="btn-sm"
-                        onClick={() => window.open(props.image_path)}
-                    >View</Button>
-                    <a className="btn btn-sm btn-outline-success" href={props.image_path}
-                       download type="submit">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             className="bi bi-download" viewBox="0 0 16 16">
-                            <path
-                                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                            <path
-                                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                        </svg>
-                    </a>
-                    <Button
-                        variant="outline-danger"
-                        className="btn-sm"
-                        onClick={handle_delete}
-                    >Delete</Button>
-                </ButtonGroup>
-                <small className="text-muted">
-                    {utc_to_local_string(props.image_timestamp)}
-                </small>
+    return (
+        <Col xs={12} md={6} lg={4} className="py-3">
+            <div className="MyGalleryCard box-shadow bg-white">
+                <Image rounded className="MyGalleryCard-image" src={props.image_path} fluid/>
+                <div className="p-2 d-flex justify-content-between align-items-center">
+                    <ButtonGroup>
+                        <Button
+                            variant="outline-primary"
+                            className="btn-sm"
+                            onClick={() => window.open(props.image_path)}
+                        >View</Button>
+                        <a className="btn btn-sm btn-outline-success" href={props.image_path}
+                           download type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 className="bi bi-download" viewBox="0 0 16 16">
+                                <path
+                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                <path
+                                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                            </svg>
+                        </a>
+                        <Button
+                            variant="outline-danger"
+                            className="btn-sm"
+                            onClick={handle_delete}
+                        >Delete</Button>
+                    </ButtonGroup>
+                    <small className="text-muted">
+                        {utc_to_local_string(props.image_timestamp)}
+                    </small>
+                </div>
             </div>
-        </div>
-    </Col>)
+        </Col>
+    )
 }
 
 export default MyGalleryCard;

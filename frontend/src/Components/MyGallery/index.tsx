@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import "./style.scss"
 import {Container, Row, Col, Button} from "react-bootstrap";
 import MyGalleryCard from "./MyGalleryCard";
@@ -27,7 +27,14 @@ const MyGallery = () => {
                 set_images_list(response.data)
             })
             .catch((error) => {
-
+                console.log(error)
+                if (error.response) {
+                    alert([
+                        'Enable to Update List',
+                        `message: ${error.response.data.detail}`,
+                        `code: ${error.response.status}`
+                    ].join('\n'))
+                }
             }).finally(() => {
                 set_is_updating(false)
             }
@@ -39,47 +46,44 @@ const MyGallery = () => {
     }, [])
 
     return (
-        <Container fluid className="MyGallery p-0">
-            <Row>
-                <Col className="p-3">
-                    <Container>
-                        <Row className="justify-content-md-center justify-content-between">
-                            <Col className="col-auto">
-                                <Button onClick={update_list_handler} variant="info">
-                                    Update List
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         className={['bi', 'bi-arrow-repeat', 'ml-1', get_loading_className(is_updating)].join(' ')}
-                                         viewBox="0 0 16 16">
-                                        <path
-                                            d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-                                        <path fill-rule="evenodd"
-                                              d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-                                    </svg>
-                                </Button>
-                            </Col>
-                            <Col className="col-auto">
-                                <UploadButton upload_url="/images/upload_image/"
-                                              update_list_handler={update_list_handler}/>
-                            </Col>
-                        </Row>
-                    </Container>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <div className="bg-light">
-                        <Container className="py-3">
-                            <Row>
-                                {images_list.map((image_info) => <MyGalleryCard
-                                    {...image_info}
-                                    handle_update_list={update_list_handler}
-                                />)}
-                            </Row>
-                        </Container>
-                    </div>
-                </Col>
-            </Row>
-        </Container>
+        <div className="MyGallery">
+            <div>
+                <Container className="py-4">
+                    <Row className="justify-content-md-center justify-content-between">
+                        <Col className="col-auto">
+                            <Button onClick={update_list_handler} variant="info">
+                                Update List
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     className={'bi bi-arrow-repeat ml-1 update-icon ' + get_loading_className(is_updating)}
+                                     viewBox="0 0 16 16">
+                                    <path
+                                        d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                                    <path fillRule="evenodd"
+                                          d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                                </svg>
+                            </Button>
+                        </Col>
+                        <Col className="col-auto">
+                            <UploadButton upload_url="/images/upload_image/"
+                                          update_list_handler={update_list_handler}/>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+            <div className="bg-light">
+                <Container className="bg-light py-2">
+                    <Row>
+                        {images_list.map((image_info) => <MyGalleryCard
+                            {...image_info}
+                            handle_update_list={update_list_handler}
+                        />)}
+                    </Row>
+                </Container>
+            </div>
+            <div>
+
+            </div>
+        </div>
     )
 }
 

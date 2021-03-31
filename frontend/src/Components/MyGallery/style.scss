@@ -1,9 +1,25 @@
+.MyGallery {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: min-content auto min-content;
+}
+
+.update-icon {
+  position: relative;
+  top: -1px;
+}
+
 .loading {
   animation: spin 3s linear infinite;
   animation-play-state: running;
   &--paused {
     animation-play-state: paused;
   }
+}
+
+.icon {
+  position: relative;
+  top: -2px;
 }
 
 @keyframes spin {
