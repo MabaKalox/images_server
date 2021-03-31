@@ -33,7 +33,7 @@ cd ./images_server
 docker-compose up
 ```
 
-access server on: https:/0.0.0.0
+access server on: https://0.0.0.0,
 access database on localhost:5432
 
 ## Running Product
@@ -43,7 +43,7 @@ cd ./images_server
 docker-compose -f docker-compose.yml -f production.yml up
 ```
 
-access server on: https:/0.0.0.0
+access server on: https://0.0.0.0
 
 ## Acknowledgments
 
