@@ -1,0 +1,19 @@
+version: "3"
+services:
+  postgresql:
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=image_db
+    ports:
+      - "5432:5432"
+  nginx_react:
+    volumes:
+      - ./frontend/build/:/var/www/html/public/
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+  fastapi:
+    volumes:
+      - ./backend:/code
+  migration:
+    volumes:
+      - ./backend:/code

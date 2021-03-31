@@ -1,0 +1,12 @@
+version: "3"
+services:
+  postgresql:
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=image_db
+    restart: unless-stopped
+  nginx_react:
+    restart: unless-stopped
+  fastapi:
+    restart: unless-stopped
