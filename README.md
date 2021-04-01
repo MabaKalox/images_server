@@ -41,7 +41,7 @@ access database on localhost:5432
 ## Running Product
 
 ```
-cd ./images_server-main
+cd ./images_server
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 ```
 
