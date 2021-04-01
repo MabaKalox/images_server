@@ -73,10 +73,13 @@ const MyGallery = () => {
             <div className="bg-light">
                 <Container className="bg-light py-2">
                     <Row>
-                        {images_list.map((image_info) => <MyGalleryCard
-                            {...image_info}
-                            handle_update_list={update_list_handler}
-                        />)}
+                        {images_list.map((image_info) => {
+                            return <MyGalleryCard
+                                key={image_info.image_timestamp}
+                                {...image_info}
+                                handle_update_list={update_list_handler}
+                            />
+                        })}
                     </Row>
                 </Container>
             </div>

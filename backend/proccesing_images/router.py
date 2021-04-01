@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 from database.database import get_db
 from .crud import ImageService
+import time
 
 images_folder_path = Path.cwd().parent / 'images_folder'
 
@@ -17,13 +18,17 @@ settings = get_settings()
 
 
 @images_router.post("/upload_image/", response_model=UploadImageSchema)
-async def upload_image(file: UploadFile = File(...), db_session=Depends(get_db)):
+async def upload_image(auto_name: bool = False, file: UploadFile = File(...), db_session=Depends(get_db)):
     file_name = Path(file.filename)
     image_format = imghdr.what(file.file)
     if image_format and image_format in settings.allowed_image_formats:
         image_info = UploadImageSchema(
             image_path=images_folder_path / file_name
         )
+        if auto_name:
+            image_info.image_path = image_info.image_path.with_name(
+                str(time.time())+image_info.image_path.suffix)
+            image_info.was_renamed = True
         await ImageService.upload_image(db_session, file, image_info, image_format)
         return image_info
     else:

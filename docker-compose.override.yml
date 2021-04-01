@@ -12,6 +12,8 @@ services:
       - ./frontend/build/:/var/www/html/public/
       - ./nginx/conf.d/:/etc/nginx/conf.d/
   fastapi:
+    ports:
+      - "8012:8012"
     volumes:
       - ./backend:/code
   migration:

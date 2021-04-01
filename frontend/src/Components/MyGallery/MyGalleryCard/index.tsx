@@ -40,7 +40,7 @@ const MyGalleryCard = (props: MyGalleryCardProps) => {
     return (
         <Col xs={12} md={6} lg={4} className="py-3">
             <div className="MyGalleryCard box-shadow bg-white">
-                <Image rounded className="MyGalleryCard-image" src={props.image_path} fluid/>
+                <Image rounded className="MyGalleryCard-image" src={props.image_path+"?t="+props.image_timestamp} fluid/>
                 <div className="p-2 d-flex justify-content-between align-items-center">
                     <ButtonGroup>
                         <Button
