@@ -22,14 +22,16 @@ https://docs.docker.com/engine/install/linux-postinstall/
 Build docker images
 
 ```
-cd ./images_server
+cd ./images_server-main
 docker-compose build
 ```
 
 ## Running Dev
 
 ```
-cd ./images_server
+cd ./images_server-main/frontend
+yarn build
+cd ..
 docker-compose up
 ```
 
@@ -39,7 +41,7 @@ access database on localhost:5432
 ## Running Product
 
 ```
-cd ./images_server
+cd ./images_server-main
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 ```
 
