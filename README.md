@@ -4,7 +4,9 @@ This is Image Server for storing and managing images
 
 ## Getting Started
 
+```
 git clone git@github.com:MabaKalox/images_server.git
+```
 
 ### Prerequisites
 
