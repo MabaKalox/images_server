@@ -40,7 +40,7 @@ access database on localhost:5432
 
 ```
 cd ./images_server
-docker-compose -f docker-compose.yml -f production.yml up
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 ```
 
 access server on: https://0.0.0.0
