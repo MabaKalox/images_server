@@ -22,14 +22,14 @@ https://docs.docker.com/engine/install/linux-postinstall/
 Build docker images
 
 ```
-cd ./images_server-main
+cd ./images_server
 docker-compose build
 ```
 
 ## Running Dev
 
 ```
-cd ./images_server-main/frontend
+cd ./images_server/frontend
 yarn build
 cd ..
 docker-compose up
