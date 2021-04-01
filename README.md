@@ -4,7 +4,9 @@ This is Image Server for storing and managing images
 
 ## Getting Started
 
+```
 git clone git@github.com:MabaKalox/images_server.git
+```
 
 ### Prerequisites
 
@@ -29,7 +31,9 @@ docker-compose build
 ## Running Dev
 
 ```
-cd ./images_server
+cd ./images_server/frontend
+yarn build
+cd ..
 docker-compose up
 ```
 
@@ -40,7 +44,7 @@ access database on localhost:5432
 
 ```
 cd ./images_server
-docker-compose -f docker-compose.yml -f production.yml up
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 ```
 
 access server on: https://0.0.0.0
