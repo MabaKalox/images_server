@@ -2,7 +2,12 @@ FROM node:alpine as build-stage
 WORKDIR /app
 COPY /frontend/package*.json /app/
 COPY /frontend/ /app/
-RUN yarn install
+RUN apk add --no-cache --virtual .gyp \
+        python \
+        make \
+        g++ \
+    && yarn install \
+    && apk del .gyp
 RUN yarn build
 
 FROM nginx:alpine
