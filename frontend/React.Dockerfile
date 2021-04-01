@@ -1,4 +1,4 @@
-FROM node:alpine as build-stage
+FROM node:alpine AS build-stage
 WORKDIR /app
 COPY /frontend/package*.json /app/
 COPY /frontend/ /app/
