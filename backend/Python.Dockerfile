@@ -34,7 +34,7 @@ COPY ./backend/ ./
 
 RUN apt-get -y update \
     && apt-get install -y --no-install-recommends libpq5 \
-    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/lib/apt/lists/*
 # Create user fastapi_user nad give access to /code and /images_folder
 RUN useradd fastapi_user \
     && chown -R fastapi_user /code \
