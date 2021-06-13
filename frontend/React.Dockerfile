@@ -3,7 +3,7 @@ WORKDIR /app
 COPY /frontend/package*.json /app/
 COPY /frontend/ /app/
 RUN apk add --no-cache --virtual .gyp \
-        python \
+        python3 \
         make \
         g++ \
     && yarn install \
